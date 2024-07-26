@@ -35,32 +35,32 @@ Create Application
 
 POST /applications
 
-curl --location 'http://localhost:3000/applications' \
---header 'Content-Type: application/json' \
---data '{
-    "application" : {
-        "name" : "application test"
-    }
-}'
+    curl --location 'http://localhost:3000/applications' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "application" : {
+            "name" : "application test"
+        }
+    }'
 
 Update Application
 
 PUT /applications
 
-curl --location --request PUT 'http://localhost:3000/applications/{application_token}' \
---header 'Content-Type: application/json' \
---data '{
-    "application" : {
-        "name" : "application 32 test"
-    }
-}'
+    curl --location --request PUT 'http://localhost:3000/applications/{application_token}' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "application" : {
+            "name" : "application 32 test"
+        }
+    }'
 
 
 Get Application by Token
 
 GET /applications/
 
-curl --location 'http://localhost:3000/applications/{application_token}'
+    curl --location 'http://localhost:3000/applications/{application_token}'
 
 
 
@@ -68,7 +68,7 @@ List Applications
 
 GET /applications
 
-curl --location 'http://localhost:3000/applications/'
+    curl --location 'http://localhost:3000/applications/'
 
 
 Chats
@@ -78,7 +78,7 @@ Create Chat
 POST /applications/
 /chats
 
-curl --location --request POST 'http://localhost:3000/applications/{application_token}/chats'
+    curl --location --request POST 'http://localhost:3000/applications/{application_token}/chats'
 
 
 Get Chat by Number
@@ -86,7 +86,7 @@ Get Chat by Number
 GET /applications/
 /chats/
 
-curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}'
+    curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}'
 
 
 List Chats for an Application
@@ -95,7 +95,7 @@ GET /applications/
 /chats
 
 
-curl --location 'http://localhost:3000/applications/{application_token}/chats'
+    curl --location 'http://localhost:3000/applications/{application_token}/chats'
 
 
 Messages
@@ -107,9 +107,9 @@ POST /applications/
 /messages
 
 
-curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages' \
---header 'Content-Type: application/json' \
---data '{"message": {"body": "Your test body here"}}'
+    curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages' \
+    --header 'Content-Type: application/json' \
+    --data '{"message": {"body": "Your test body here"}}'
 
 
 Get Message by Number
@@ -118,7 +118,7 @@ GET /applications/
 /chats/
 /messages/
 
-curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages/{message_number}'
+    curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages/{message_number}'
 
 
 Update Message
@@ -128,9 +128,9 @@ PUT /applications/
 /messages/
 
 
-curl --location --request PUT 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages/{message_number}' \
---header 'Content-Type: application/json' \
---data '{"message": {"body": "Your test body here"}}'
+    curl --location --request PUT 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages/{message_number}' \
+    --header 'Content-Type: application/json' \
+    --data '{"message": {"body": "Your test body here"}}'
 
 
 List Messages for a Chat
@@ -139,7 +139,7 @@ GET /applications/
 /chats/
 /messages
 
-curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages/'
+    curl --location 'http://localhost:3000/applications/{application_token}/chats/{chat_number}/messages/'
 
 
 Search Messages
@@ -149,5 +149,5 @@ GET /applications/
 /messages/search
 
 
-curl --location 'http://localhost:3000/applications/{application_token}/chats/1/messages/search?query=test' \
---header 'Content-Type: application/json'
+    curl --location 'http://localhost:3000/applications/{application_token}/chats/1/messages/search?query=test' \
+    --header 'Content-Type: application/json'
