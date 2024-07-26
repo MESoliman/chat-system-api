@@ -15,9 +15,7 @@ Docker Setup
 
 You can use Docker to run the services:
 
-
-
-docker-compose up
+    docker-compose up
 
 This command will start the following services:
 
