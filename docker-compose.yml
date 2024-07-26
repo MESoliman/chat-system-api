@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: chat_system_development
+    ports:
+      - "3307:3306"
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6380:6381"
+    volumes:
+      - redis:/data:delegated
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+    ports:
+      - "9201:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ".:/app"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    links:
+      - db
+      - elasticsearch
+    environment:
+        DB_USER: root
+        DB_NAME: chat_system_development
+        DB_PASSWORD: 123456789
+        DB_HOST: db
+        RAILS_ENV: development
+        DATABASE_URL: mysql2://root:123456789@db:3306/chat_system_development
+        REDIS_URL: redis://redis:6379/0
+        ELASTICSEARCH_URL: http://elasticsearch:9200
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - ".:/app"
+    links:
+      - db
+      - elasticsearch  
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+        DB_USER: root
+        DB_NAME: chat_system_development
+        DB_PASSWORD: 123456789
+        DB_HOST: db
+        RAILS_ENV: development
+        DATABASE_URL: mysql2://root:123456789@db:3306/chat_system_development
+        REDIS_URL: redis://redis:6379/0
+        ELASTICSEARCH_URL: http://elasticsearch:9200
+        
+volumes:
+  db_data: {}
+  redis: {}
+  esdata: {}
